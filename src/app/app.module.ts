@@ -8,6 +8,7 @@ import { AngularFireModule } from '@angular/fire';
 import { FIREBASECONFIG } from '../confi/firebase.config';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { VideoPlayer } from '../../node_modules/@ionic-native/video-player';
 
 
 
@@ -29,7 +30,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AngularFireAuth
+    AngularFireAuth,
+    VideoPlayer
   ]
 })
 export class AppModule {}

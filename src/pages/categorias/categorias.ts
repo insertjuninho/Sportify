@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { VideoPlayer } from '@ionic-native/video-player';
 
 /**
  * Generated class for the CategoriasPage page.
@@ -15,11 +16,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CategoriasPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams,
+    private videoPlayer: VideoPlayer) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CategoriasPage');
+    this.videoPlayer.play('https://staging.coverr.co/s3/mp4/Busy-Forest.mp4').then(() => {
+      console.log('video completed');
+     }).catch(err => {
+      console.log('Erro: '+err);
+     });
   }
+
 
 }
