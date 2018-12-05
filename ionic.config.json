@@ -1,13 +1,7 @@
 {
-  "name": "AulaIonic",
+  "name": "Musica",
   "integrations": {
     "cordova": {}
   },
-  "type": "ionic-angular",
-  "proxies": [
-    {
-      "path": "/",
-      "proxyUrl": "https://storage.googleapis.com"
-    }
-  ]
+  "type": "ionic-angular"
 }
