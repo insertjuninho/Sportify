@@ -1,46 +1,37 @@
-import { Component, ViewChild } from '@angular/core';
-import { NavController, IonicPage, ToastController } from 'ionic-angular';
-import { AngularFireAuth } from '../../../node_modules/angularfire2/auth';
+import { Component } from '@angular/core';
+import { SmartAudioProvider } from '../../providers/smart-audio/smart-audio';
+import { FileChooser } from '@ionic-native/file-chooser';
+import { FileOpener } from '@ionic-native/file-opener';
+import { FilePath } from '@ionic-native/file-path';
 
-@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
 
-  @ViewChild('usuario') usuario;
-  @ViewChild('password') password;
-
-  constructor(public navCtrl: NavController,
-              public firebaseAuth : AngularFireAuth,
-              public toastCtrl : ToastController) {
+  constructor(public smartAudio: SmartAudioProvider,
+              private fileChooser: FileChooser,
+              private fileOpener : FileOpener,
+              private filePath   : FilePath) {
 
   }
 
-  login(){
-    this.firebaseAuth.auth.signInWithEmailAndPassword(
-      this.usuario.value,this.password.value,
-    ).then(()=>{
-      //login com successo
-      console.log(this.firebaseAuth.auth.currentUser.email);
-      this.exibirMensage('Logado com sucesso');
-    })
-    .catch( ( erro:any) => {
-        //login sem sucesso
-    
+  iniciar() {
+    this.smartAudio.play('playbtn');
+    this.fileChooser.open().then(file => {
+      this.filePath.resolveNativePath(file).then(resolvedFilePath => {
+        this.fileOpener.open(resolvedFilePath, 'application/mp3').then(file => {
+          alert("It worked!")
+        }).catch(err => {
+          alert(JSON.stringify(err));
+        });
+      }).catch(err => {
+        alert(JSON.stringify(err));
+      });
+    }).catch(err => {
+      alert(JSON.stringify(err));
     });
   }
 
-  exibirMensage(mensagem : string){
-    let toast = this.toastCtrl.create({
-      duration : 4000, position: 'bottom'
-    })
-    toast.setMessage(mensagem);
-    toast.present();
-  }
-
-  irParaCadastro(){
-    this.navCtrl.push('CadastroPage');
-  }
 }
